@@ -3,6 +3,7 @@ import skills from '../data/skills.json'
 import stats from '../data/stats.json'
 
 export default defineConfig({
+  base: '/skill-hub/',
   title: "Skill Hub",
   description: "OpenClaw & MCP Skills 收集平台 - 发现最新最热的 AI 能力插件",
   
