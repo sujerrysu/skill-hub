@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as i,ag as r}from"./chunks/framework.ePeAWSvT.js";const b=JSON.parse('{"title":"关于 Skill Hub","description":"","frontmatter":{},"headers":[],"relativePath":"about.md","filePath":"about.md"}'),t={name:"about.md"};function o(s,l,n,u,h,c){return a(),i("div",null,[...l[0]||(l[0]=[r("",40)])])}const g=e(t,[["render",o]]);export{b as __pageData,g as default};
