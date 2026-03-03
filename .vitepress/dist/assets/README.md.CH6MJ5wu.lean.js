@@ -1,0 +1,1 @@
+import{_ as a,o as i,c as n,ag as l}from"./chunks/framework.Bk_5_eOm.js";const c=JSON.parse('{"title":"Skill Hub","description":"","frontmatter":{},"headers":[],"relativePath":"README.md","filePath":"README.md"}'),e={name:"README.md"};function t(p,s,r,h,o,d){return i(),n("div",null,[...s[0]||(s[0]=[l("",41)])])}const u=a(e,[["render",t]]);export{c as __pageData,u as default};
