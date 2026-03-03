@@ -1,103 +1,36 @@
-<script setup>
-import { data as skills } from '../.vitepress/theme/skills.data.js'
-</script>
-
 # 所有技能
 
-<div style="margin: 20px 0;">
-  <input 
-    v-model="searchQuery" 
-    placeholder="🔍 搜索技能..." 
-    style="width: 100%; padding: 12px 20px; font-size: 16px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-soft);"
-  />
-</div>
+收录了 **267 个 OpenClaw & MCP Skills**，涵盖开发工具、AI、生产力、数据处理等多个领域。
 
-<div style="margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;">
-  <button 
-    v-for="cat in categories" 
-    :key="cat"
-    @click="selectedCategory = selectedCategory === cat ? null : cat"
-    :style="{
-      padding: '8px 16px',
-      border: '1px solid var(--vp-c-divider)',
-      borderRadius: '20px',
-      background: selectedCategory === cat ? 'var(--vp-c-brand)' : 'var(--vp-c-bg-soft)',
-      color: selectedCategory === cat ? 'white' : 'var(--vp-c-text-1)',
-      cursor: 'pointer'
-    }"
-  >
-    {{ cat }} ({{ getCategoryCount(cat) }})
-  </button>
-</div>
+## 🔍 按分类浏览
 
-<div style="margin: 20px 0;">
-  <p style="color: var(--vp-c-text-2);">找到 {{ filteredSkills.length }} 个技能</p>
-</div>
+- [Development (40)](/categories/#development) - 开发工具和框架
+- [AI (55)](/categories/#ai) - 人工智能相关
+- [Productivity (6)](/categories/#productivity) - 效率工具
+- [Data (6)](/categories/#data) - 数据处理
+- [Utility (14)](/categories/#utility) - 实用工具
+- [Integration (1)](/categories/#integration) - 集成服务
+- [Other (145)](/categories/#other) - 其他
 
-<div v-for="skill in filteredSkills" :key="skill.id" style="margin: 20px 0; padding: 20px; background: var(--vp-c-bg-soft); border-radius: 8px; border-left: 4px solid var(--vp-c-brand);">
-  <div style="display: flex; justify-content: space-between; align-items: start;">
-    <div style="flex: 1;">
-      <h3 style="margin: 0 0 8px 0;">
-        <a :href="skill.url" target="_blank" style="color: var(--vp-c-brand); text-decoration: none;">
-          {{ skill.fullName }}
-        </a>
-      </h3>
-      <p style="margin: 8px 0; color: var(--vp-c-text-2);">{{ skill.description || '暂无描述' }}</p>
-      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
-        <span style="padding: 4px 8px; background: var(--vp-c-brand-soft); border-radius: 4px; font-size: 12px;">
-          {{ skill.category }}
-        </span>
-        <span v-if="skill.language" style="padding: 4px 8px; background: var(--vp-c-bg); border-radius: 4px; font-size: 12px;">
-          {{ skill.language }}
-        </span>
-        <span v-if="skill.source === 'github'" style="padding: 4px 8px; background: var(--vp-c-bg); border-radius: 4px; font-size: 12px;">
-          ⭐ {{ skill.stars }}
-        </span>
-        <span style="padding: 4px 8px; background: var(--vp-c-bg); border-radius: 4px; font-size: 12px;">
-          📅 {{ new Date(skill.lastUpdated).toLocaleDateString('zh-CN') }}
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
+## 📊 数据来源
 
-<script>
-import { ref, computed } from 'vue'
+- **GitHub 仓库**: 99 个
+- **NPM 包**: 168 个
+- **最后更新**: 2026-03-03
 
-export default {
-  setup() {
-    const searchQuery = ref('')
-    const selectedCategory = ref(null)
-    
-    const categories = computed(() => {
-      const cats = new Set()
-      skills.forEach(skill => cats.add(skill.category))
-      return Array.from(cats).sort()
-    })
-    
-    const filteredSkills = computed(() => {
-      return skills.filter(skill => {
-        const matchesSearch = !searchQuery.value || 
-          skill.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-          skill.description?.toLowerCase().includes(searchQuery.value.toLowerCase())
-        
-        const matchesCategory = !selectedCategory.value || skill.category === selectedCategory.value
-        
-        return matchesSearch && matchesCategory
-      })
-    })
-    
-    const getCategoryCount = (cat) => {
-      return skills.filter(s => s.category === cat).length
-    }
-    
-    return {
-      searchQuery,
-      selectedCategory,
-      categories,
-      filteredSkills,
-      getCategoryCount
-    }
-  }
-}
-</script>
+## 🔥 热门推荐
+
+查看 [趋势榜](/trending/) 了解最受欢迎的 Skills
+
+## 💡 使用方法
+
+1. 浏览 [分类页面](/categories/) 找到感兴趣的领域
+2. 查看 [趋势榜](/trending/) 了解最受欢迎的 Skills
+3. 点击 Skill 名称访问其 GitHub 仓库或 NPM 页面
+4. 按照各 Skill 的文档进行安装和使用
+
+---
+
+::: tip 提示
+本平台每天自动更新，数据来源于 GitHub 和 NPM 公开信息。
+:::

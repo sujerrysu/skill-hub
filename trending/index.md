@@ -1,64 +1,87 @@
-<script setup>
-import { data as skills } from '../.vitepress/theme/skills.data.js'
-import { computed } from 'vue'
-
-const topSkills = computed(() => {
-  return skills
-    .filter(s => s.source === 'github')
-    .sort((a, b) => b.stars - a.stars)
-    .slice(0, 50)
-})
-
-const recentSkills = computed(() => {
-  return skills
-    .sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated))
-    .slice(0, 20)
-})
-</script>
-
 # 🔥 趋势榜
 
-## ⭐ Top 50 - 最受欢迎
+展示最受欢迎和最近更新的 OpenClaw & MCP Skills
 
-<div v-for="(skill, index) in topSkills" :key="skill.id" style="margin: 15px 0; padding: 15px; background: var(--vp-c-bg-soft); border-radius: 8px; display: flex; align-items: center; gap: 15px;">
-  <div style="font-size: 24px; font-weight: bold; color: var(--vp-c-text-3); min-width: 40px;">
-    {{ index + 1 }}
-  </div>
-  <div style="flex: 1;">
-    <h3 style="margin: 0 0 8px 0;">
-      <a :href="skill.url" target="_blank" style="color: var(--vp-c-brand); text-decoration: none;">
-        {{ skill.fullName }}
-      </a>
-      <span style="margin-left: 10px; color: var(--vp-c-text-3); font-size: 14px; font-weight: normal;">
-        ⭐ {{ skill.stars.toLocaleString() }}
-      </span>
-    </h3>
-    <p style="margin: 0; color: var(--vp-c-text-2); font-size: 14px;">
-      {{ skill.description || '暂无描述' }}
-    </p>
-    <div style="margin-top: 8px; display: flex; gap: 8px;">
-      <span style="padding: 2px 8px; background: var(--vp-c-brand-soft); border-radius: 4px; font-size: 12px;">
-        {{ skill.category }}
-      </span>
-      <span v-if="skill.language" style="padding: 2px 8px; background: var(--vp-c-bg); border-radius: 4px; font-size: 12px;">
-        {{ skill.language }}
-      </span>
-    </div>
-  </div>
-</div>
+## ⭐ Top 10 最受欢迎
+
+基于 GitHub Star 数排名：
+
+### 1. n8n-io/n8n ⭐ 177,291
+Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.
+
+🔗 [访问仓库](https://github.com/n8n-io/n8n) | 分类: Other
+
+---
+
+### 2. YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill ⭐ 1,092
+AI skill for OpenClaw & Claude Code — recommend from 10000+ Nano Banana Pro (Gemini) image prompts. Smart search by use case, content remix, sample images.
+
+🔗 [访问仓库](https://github.com/YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill) | 分类: AI
+
+---
+
+### 3. prompt-security/clawsec ⭐ 559
+A complete security skill suite for OpenClaw's and NanoClaw agents (and variants). Protect your SOUL.md (etc') with drift detection, live security recommendations, automated audits, and skill integrity verification.
+
+🔗 [访问仓库](https://github.com/prompt-security/clawsec) | 分类: Other
+
+---
+
+### 4. SonarSource/sonarqube-mcp-server ⭐ 401
+MCP Server providing access to SonarQube or SonarCloud APIs
+
+🔗 [访问仓库](https://github.com/SonarSource/sonarqube-mcp-server) | 分类: Development
+
+---
+
+### 5. modelcontextprotocol/servers ⭐ 319
+MCP Servers for external tools and services
+
+🔗 [访问仓库](https://github.com/modelcontextprotocol/servers) | 分类: Other
+
+---
+
+### 6. zed-industries/zed ⭐ 211
+Code at the speed of thought – Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.
+
+🔗 [访问仓库](https://github.com/zed-industries/zed) | 分类: Development
+
+---
+
+### 7. michaellatman/mcp-server-fetch ⭐ 171
+Browser-compatible implementation of a Model Context Protocol (MCP) client using Server-Sent Events (SSE) transport and Fetch API.
+
+🔗 [访问仓库](https://github.com/michaellatman/mcp-server-fetch) | 分类: Utility
+
+---
+
+### 8. cloudflare/mcp-server-cloudflare ⭐ 145
+MCP for connecting to Cloudflare services: AI Gateway, Analytics Engine, D1, Durable Objects, Hyperdrive, KV, Queues, R2, Vectorize, Workers, and more.
+
+🔗 [访问仓库](https://github.com/cloudflare/mcp-server-cloudflare) | 分类: Integration
+
+---
+
+### 9. mark3labs/mcp-filesystem-server ⭐ 142
+MCP server providing filesystem operations
+
+🔗 [访问仓库](https://github.com/mark3labs/mcp-filesystem-server) | 分类: Utility
+
+---
+
+### 10. lobehub/lobe-chat ⭐ 135
+🤯 Lobe Chat - an open-source, modern-design AI chat framework. Supports Multi AI Providers( OpenAI / Claude 3 / Gemini / Ollama / Qwen / DeepSeek), Knowledge Base (file upload / knowledge management / RAG ), Multi-Modals (Vision/TTS/Plugins/Artifacts).
+
+🔗 [访问仓库](https://github.com/lobehub/lobe-chat) | 分类: AI
+
+---
 
 ## 🆕 最近更新
 
-<div v-for="skill in recentSkills" :key="skill.id" style="margin: 15px 0; padding: 15px; background: var(--vp-c-bg-soft); border-radius: 8px;">
-  <h3 style="margin: 0 0 8px 0;">
-    <a :href="skill.url" target="_blank" style="color: var(--vp-c-brand); text-decoration: none;">
-      {{ skill.fullName }}
-    </a>
-    <span style="margin-left: 10px; color: var(--vp-c-text-3); font-size: 14px; font-weight: normal;">
-      📅 {{ new Date(skill.lastUpdated).toLocaleDateString('zh-CN') }}
-    </span>
-  </h3>
-  <p style="margin: 0; color: var(--vp-c-text-2); font-size: 14px;">
-    {{ skill.description || '暂无描述' }}
-  </p>
-</div>
+查看 [分类页面](/categories/) 了解更多 Skills
+
+---
+
+::: tip 提示
+数据每天自动更新，排名基于 GitHub Star 数和最后更新时间。
+:::
