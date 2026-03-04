@@ -233,6 +233,36 @@
       display: flex;
       align-items: flex-start;
       gap: 1rem;
+      position: relative;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.4rem 0.8rem;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      color: #64748b;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .copy-btn:hover {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .copy-btn.copied {
+      background: #22c55e;
+      color: white;
+      border-color: #22c55e;
     }
 
     .skill-icon {
@@ -317,11 +347,38 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
+      position: relative;
     }
 
     .ranking-card:hover {
       border-color: #2563eb;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    }
+
+    .ranking-copy-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.4rem 0.8rem;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      color: #64748b;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ranking-copy-btn:hover {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .ranking-copy-btn.copied {
+      background: #22c55e;
+      color: white;
+      border-color: #22c55e;
     }
 
     .rank-badge {
@@ -648,6 +705,7 @@
         const icon = categoryIcons[skill.category] || categoryIcons.default;
         const descEn = (skill.description || '').substring(0, 150);
         const descZh = translateDescription(descEn);
+        const skillId = skill.id || skill.name;
         
         return `
           <div class="skill-card">
@@ -657,6 +715,9 @@
                 <div class="skill-name-en">${skill.name}</div>
                 <div class="skill-name-zh">${zhName}</div>
               </div>
+              <button class="copy-btn" onclick="copySkillInfo(this, '${skillId.replace(/'/g, "\\'")}', '${skill.name.replace(/'/g, "\\'")}', '${skill.url}', '${zhName}', '${descZh.replace(/'/g, "\\'").substring(0, 50)}')">
+                📋 复制
+              </button>
             </div>
             <div class="skill-desc" style="margin-bottom:0.5rem;">${descZh}${descEn.length === 150 ? '...' : ''}</div>
             <div class="skill-desc" style="color:#94a3b8; font-size:0.85rem; font-style:italic;">${descEn}${descEn.length === 150 ? '...' : ''}</div>
@@ -665,7 +726,7 @@
               <div class="meta-badge">${skill.source || 'GitHub'}</div>
               ${skill.category ? `<div class="meta-badge">${skill.category}</div>` : ''}
             </div>
-            <div class="install-command" onclick="copyCmd(this, '${skill.url}')" title="点击复制">
+            <div class="install-command" onclick="copyCmd(this, '${skill.url}')" title="点击复制URL">
               ${skill.url || skill.name}
             </div>
           </div>
@@ -698,6 +759,9 @@
                 ${skill.category ? `<div class="meta-badge">${skill.category}</div>` : ''}
               </div>
             </div>
+            <button class="ranking-copy-btn" onclick="copyRanking(this, ${rank}, '${skill.name.replace(/'/g, "\\'")}', '${zhName}', '${skill.url}', ${skill.stars})">
+              📋 复制
+            </button>
           </div>
         `;
       }).join('');
@@ -732,6 +796,9 @@
                 <div class="meta-badge">${skill.source || 'GitHub'}</div>
               </div>
             </div>
+            <button class="ranking-copy-btn" onclick="copyRanking(this, ${rank}, '${skill.name.replace(/'/g, "\\'")}', '${zhName}', '${skill.url}', ${skill.stars || 0}, '${timeStr}')">
+              📋 复制
+            </button>
           </div>
         `;
       }).join('');
@@ -760,6 +827,61 @@
           el.style.background = orig;
           el.style.borderColor = 'transparent';
         }, 500);
+      });
+    }
+
+    function copySkillInfo(btn, id, name, url, zhName, desc) {
+      const info = `📦 ${name}
+🌏 ${zhName}
+📝 ${desc}
+🔗 ${url}
+📋 ID: ${id}`;
+      
+      navigator.clipboard.writeText(info).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅ 已复制';
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        btn.innerHTML = '❌ 失败';
+        setTimeout(() => {
+          btn.innerHTML = '📋 复制';
+        }, 2000);
+      });
+    }
+
+    function copyRanking(btn, rank, name, zhName, url, stars, date) {
+      let info = `🏆 排名 #${rank}
+📦 ${name}
+🌏 ${zhName}
+🔗 ${url}`;
+      
+      if (stars) {
+        info += `\n⭐ ${stars.toLocaleString()} Stars`;
+      }
+      
+      if (date) {
+        info += `\n🕒 ${date}`;
+      }
+      
+      navigator.clipboard.writeText(info).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅ 已复制';
+        btn.classList.add('copied');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        btn.innerHTML = '❌ 失败';
+        setTimeout(() => {
+          btn.innerHTML = '📋 复制';
+        }, 2000);
       });
     }
 
