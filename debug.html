@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Skill Hub - Debug</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .skill-card {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+    .skill-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .skill-desc {
+      color: #666;
+    }
+    #status {
+      padding: 10px;
+      background: #f0f0f0;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Skill Hub Debug Page</h1>
+  <div id="status">Loading...</div>
+  <div id="skills-container"></div>
+
+  <script>
+    async function loadAndDisplaySkills() {
+      const statusEl = document.getElementById('status');
+      const container = document.getElementById('skills-container');
+      
+      try {
+        statusEl.textContent = 'Fetching data from /skill-hub/data/skills.json...';
+        
+        const response = await fetch('/skill-hub/data/skills.json');
+        statusEl.textContent = `Response status: ${response.status}`;
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const data = await response.json();
+        const skills = data.skills || data || [];
+        
+        statusEl.textContent = `✅ Successfully loaded ${skills.length} skills!`;
+        statusEl.style.background = '#d4edda';
+        statusEl.style.color = '#155724';
+        
+        container.innerHTML = skills.slice(0, 20).map(skill => `
+          <div class="skill-card">
+            <div class="skill-name">${skill.name}</div>
+            <div class="skill-desc">${skill.description || 'No description'}</div>
+            <small>Category: ${skill.category || 'N/A'} | Source: ${skill.source || 'N/A'}</small>
+          </div>
+        `).join('');
+        
+        if (skills.length > 20) {
+          container.innerHTML += `<p><em>...and ${skills.length - 20} more skills</em></p>`;
+        }
+        
+      } catch (error) {
+        statusEl.textContent = `❌ Error: ${error.message}`;
+        statusEl.style.background = '#f8d7da';
+        statusEl.style.color = '#721c24';
+        console.error('Failed to load skills:', error);
+      }
+    }
+    
+    loadAndDisplaySkills();
+  </script>
+</body>
+</html>
