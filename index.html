@@ -498,6 +498,102 @@
       return name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     }
 
+    // 翻译描述为中文
+    function translateDescription(desc) {
+      if (!desc) return '暂无描述';
+      
+      const translations = {
+        // 常用词汇
+        'workflow automation': '工作流自动化',
+        'automation platform': '自动化平台',
+        'AI capabilities': 'AI能力',
+        'native AI': '原生AI',
+        'visual building': '可视化构建',
+        'custom code': '自定义代码',
+        'self-host': '自托管',
+        'cloud': '云端',
+        'integrations': '集成',
+        'integration': '集成',
+        'prompts': '提示词',
+        'recommend': '推荐',
+        'image generation': '图像生成',
+        'search': '搜索',
+        'use case': '使用场景',
+        'sample images': '示例图片',
+        'database': '数据库',
+        'server': '服务器',
+        'client': '客户端',
+        'protocol': '协议',
+        'API': 'API接口',
+        'framework': '框架',
+        'library': '库',
+        'tool': '工具',
+        'plugin': '插件',
+        'extension': '扩展',
+        'skill': '技能',
+        'agent': '代理',
+        'assistant': '助手',
+        'chatbot': '聊天机器人',
+        'bot': '机器人',
+        'management': '管理',
+        'monitor': '监控',
+        'analytics': '分析',
+        'data': '数据',
+        'file': '文件',
+        'storage': '存储',
+        'sync': '同步',
+        'backup': '备份',
+        'security': '安全',
+        'authentication': '认证',
+        'authorization': '授权',
+        'deployment': '部署',
+        'container': '容器',
+        'orchestration': '编排',
+        'service': '服务',
+        'microservices': '微服务',
+        'REST': 'REST接口',
+        'GraphQL': 'GraphQL',
+        'WebSocket': 'WebSocket',
+        'real-time': '实时',
+        'async': '异步',
+        'queue': '队列',
+        'message': '消息',
+        'notification': '通知',
+        'email': '邮件',
+        'SMS': '短信',
+        'push': '推送',
+        'logging': '日志',
+        'debugging': '调试',
+        'testing': '测试',
+        'documentation': '文档',
+        'open source': '开源',
+        'free': '免费',
+        'enterprise': '企业级',
+        'scalable': '可扩展',
+        'high performance': '高性能',
+        'lightweight': '轻量级',
+        'easy to use': '易于使用',
+        'user-friendly': '用户友好',
+        'powerful': '强大',
+        'flexible': '灵活',
+        'customizable': '可定制',
+        'production-ready': '生产就绪',
+        'battle-tested': '久经考验'
+      };
+      
+      let translated = desc;
+      
+      // 按长度排序，优先匹配长短语
+      const sortedKeys = Object.keys(translations).sort((a, b) => b.length - a.length);
+      
+      for (const en of sortedKeys) {
+        const regex = new RegExp(en, 'gi');
+        translated = translated.replace(regex, translations[en]);
+      }
+      
+      return translated;
+    }
+
     async function loadSkills() {
       try {
         const response = await fetch('/skill-hub/data/skills.json?t=' + Date.now());
@@ -550,7 +646,8 @@
       grid.innerHTML = skills.slice(0, 100).map(skill => {
         const zhName = getChineseName(skill.name);
         const icon = categoryIcons[skill.category] || categoryIcons.default;
-        const desc = (skill.description || '').substring(0, 150);
+        const descEn = (skill.description || '').substring(0, 150);
+        const descZh = translateDescription(descEn);
         
         return `
           <div class="skill-card">
@@ -561,7 +658,8 @@
                 <div class="skill-name-zh">${zhName}</div>
               </div>
             </div>
-            <div class="skill-desc">${desc}${desc.length === 150 ? '...' : ''}</div>
+            <div class="skill-desc" style="margin-bottom:0.5rem;">${descZh}${descEn.length === 150 ? '...' : ''}</div>
+            <div class="skill-desc" style="color:#94a3b8; font-size:0.85rem; font-style:italic;">${descEn}${descEn.length === 150 ? '...' : ''}</div>
             <div class="skill-meta">
               ${skill.stars ? `<div class="meta-item">⭐ ${skill.stars.toLocaleString()}</div>` : ''}
               <div class="meta-badge">${skill.source || 'GitHub'}</div>
@@ -585,6 +683,7 @@
         const rank = index + 1;
         const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : 'normal';
         const zhName = getChineseName(skill.name);
+        const descZh = translateDescription((skill.description || '').substring(0, 100));
         
         return `
           <div class="ranking-card">
@@ -592,6 +691,7 @@
             <div class="ranking-content">
               <div class="ranking-title">${skill.name}</div>
               <div class="skill-name-zh">${zhName}</div>
+              <div class="skill-desc" style="margin-top:0.5rem; font-size:0.9rem;">${descZh}</div>
               <div class="ranking-stats">
                 <div class="meta-item">⭐ ${skill.stars.toLocaleString()}</div>
                 <div class="meta-badge">${skill.source || 'GitHub'}</div>
@@ -615,6 +715,7 @@
         const rank = index + 1;
         const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : 'normal';
         const zhName = getChineseName(skill.name);
+        const descZh = translateDescription((skill.description || '').substring(0, 100));
         const date = new Date(skill.lastUpdated || skill.createdAt);
         const timeStr = date.toLocaleDateString('zh-CN');
         
@@ -624,6 +725,7 @@
             <div class="ranking-content">
               <div class="ranking-title">${skill.name}</div>
               <div class="skill-name-zh">${zhName}</div>
+              <div class="skill-desc" style="margin-top:0.5rem; font-size:0.9rem;">${descZh}</div>
               <div class="ranking-stats">
                 <div class="meta-item">🕒 ${timeStr}</div>
                 ${skill.stars ? `<div class="meta-item">⭐ ${skill.stars.toLocaleString()}</div>` : ''}
