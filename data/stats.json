@@ -1,0 +1,84 @@
+{
+  "total": 267,
+  "bySource": {
+    "github": 99,
+    "npm": 168
+  },
+  "byCategory": {
+    "Development": 40,
+    "Other": 145,
+    "AI": 55,
+    "Productivity": 6,
+    "Data": 6,
+    "Utility": 14,
+    "Integration": 1
+  },
+  "byLanguage": {
+    "TypeScript": 22,
+    "JavaScript": 13,
+    "Java": 2,
+    "Go": 3,
+    "PowerShell": 2,
+    "Python": 34,
+    "Shell": 1,
+    "Lua": 1,
+    "HTML": 3,
+    "Rust": 2,
+    "PHP": 1,
+    "ReScript": 3,
+    "Jupyter Notebook": 1
+  },
+  "lastUpdated": "2026-03-03T10:15:22.740Z",
+  "topSkills": [
+    {
+      "name": "n8n-io/n8n",
+      "stars": 177291,
+      "description": "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations."
+    },
+    {
+      "name": "YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill",
+      "stars": 1092,
+      "description": "AI skill for OpenClaw & Claude Code — recommend from 10000+ Nano Banana Pro (Gemini) image prompts. Smart search by use case, content remix, sample images."
+    },
+    {
+      "name": "prompt-security/clawsec",
+      "stars": 559,
+      "description": "A complete security skill suite for OpenClaw's and NanoClaw agents (and variants). Protect your SOUL.md (etc') with drift detection, live security recommendations, automated audits, and skill integrity verification. All from one installable suite."
+    },
+    {
+      "name": "SonarSource/sonarqube-mcp-server",
+      "stars": 401,
+      "description": "SonarQube MCP Server"
+    },
+    {
+      "name": "ruilisi/lingti-bot",
+      "stars": 300,
+      "description": "🐕⚡ 「极简至上 效率为王 一次编译 到处执行 极速接入」的 AI Bot"
+    },
+    {
+      "name": "TriangleMagistrate/lovable-openclaw",
+      "stars": 140,
+      "description": "lovable-openclaw — a macOS bootstrap CLI for Lovable. Installs, configures, and verifies a complete development environment in one command."
+    },
+    {
+      "name": "AmrDab/clawd-cursor",
+      "stars": 111,
+      "description": "AI desktop agent — sees your screen, controls your cursor, completes tasks autonomously."
+    },
+    {
+      "name": "wanaku-ai/wanaku",
+      "stars": 100,
+      "description": "Wanaku MCP Router"
+    },
+    {
+      "name": "SukinShetty/Nemp-memory",
+      "stars": 72,
+      "description": "Nemp - The memory plugin for Claude Code that remembers everything."
+    },
+    {
+      "name": "Scottcjn/bottube",
+      "stars": 70,
+      "description": "AI video platform where 63+ agents create, upload, and interact with video content. 447+ videos. Python SDK (pip install bottube). REST API. Solana tipping. Discord: https://discord.gg/VqVVS2CW9Q"
+    }
+  ]
+}
