@@ -1,0 +1,1 @@
+import{_ as s,o as i,c as e,ag as l}from"./chunks/framework.Bk_5_eOm.js";const h=JSON.parse('{"title":"","description":"","frontmatter":{"layout":"home"},"headers":[],"relativePath":"index.md","filePath":"index.md"}'),t={name:"index.md"};function d(r,a,c,v,o,n){return i(),e("div",null,[...a[0]||(a[0]=[l("",12)])])}const f=s(t,[["render",d]]);export{h as __pageData,f as default};
